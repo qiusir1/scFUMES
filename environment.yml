@@ -1,0 +1,12 @@
+name: scFUMES
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.9
+  - scanpy>=1.10
+  - pandas>=2.0
+  - numpy>=1.26
+  - scipy>=1.12
+  - statsmodels>=0.14
+  - pip
