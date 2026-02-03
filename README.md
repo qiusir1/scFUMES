@@ -21,6 +21,9 @@ scFUMES \
   --cluster_label "cell_type" \
   --comparison "disease" \
   --group "normal" \
+  --regress_covariates age,sex \
   --outdir results \
   --n_perm 10
 ```
+
+Note: covariates provided to `--regress_covariates` must exist as columns in `adata.obs`.
