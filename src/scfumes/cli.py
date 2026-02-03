@@ -21,11 +21,24 @@ def build_parser() -> argparse.ArgumentParser:
                    help="Output directory")
     scfumes.add_argument("--n_perm", type=int, default=1000,
                    help="Number of permutations")
+    scfumes.add_argument(
+        "--regress_covariates",
+        default=None,
+        help="Comma-separated list of covariates in adata.obs to regress out",
+    )
     return scfumes
 
 
 def main(argv = None):
     args = build_parser().parse_args(argv)
+
+    regress_covariates = None
+    if args.regress_covariates:
+        regress_covariates = [
+            covariate.strip()
+            for covariate in args.regress_covariates.split(",")
+            if covariate.strip()
+        ]
 
     calc = ScFUMESCalculator.from_files(
         h5ad_path=args.dataset,
@@ -37,4 +50,5 @@ def main(argv = None):
         group=args.group,
         output_dir=Path(args.outdir),
         n_perm=args.n_perm,
+        regress_covariates=regress_covariates,
     )

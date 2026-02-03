@@ -19,7 +19,6 @@ class ScFUMESCalculator:
     @classmethod
     def from_files(cls, h5ad_path, cluster_label="cell_type"):
         adata = sc.read_h5ad(h5ad_path)
-        prepare_adata(adata, cluster_label)
         return cls(adata, cluster_label)
 
     def process(
@@ -30,7 +29,13 @@ class ScFUMESCalculator:
         output_dir="results",
         q=0.25,
         n_perm=1000,
+        regress_covariates: list[str] | None = None,
     ):
+        prepare_adata(
+            self.adata,
+            cluster_label=self.cluster_label,
+            regress_covariates=regress_covariates,
+        )
         out_dir = Path(output_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
 
